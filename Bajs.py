@@ -1,7 +1,7 @@
 
 
 import numpy as np
-import mathplotlib as plt
+import matplotlib.pyplot as plt
 
 #numpy.matmul(A, B) : matrismultiplikation mellan två matriser
 #matplotlib.pyplot.scatter(x, y) : skapar ett punktdiagram med punkter vid koordinaterna (x, y)
@@ -42,6 +42,53 @@ vectors = generate_vectors(A, v0, n)
 plt.scatter(vectors[0, :], vectors[1, :], s=0.1)
 plt.show()
 
+
+def barnsley_fern(n):
+    # Definiera matriser och vektorer för de fyra affina transformationerna
+    A1 = np.array([[0, 0], [0, 0.16]])
+    A2 = np.array([[0.85, 0.04], [-0.04, 0.85]])
+    A3 = np.array([[0.2, -0.26], [0.23, 0.22]])
+    A4 = np.array([[-0.15, 0.28], [0.26, 0.24]])
+    
+    b1 = np.array([0, 0])
+    b2 = np.array([0, 1.6])
+    b3 = np.array([0, 1.6])
+    b4 = np.array([0, 0.44])
+
+    # Initialisera startvektor
+    v = np.array([0, 0])
+    
+    # Lista för att lagra alla vektorer
+    points = []
+    
+    # Generera n punkter
+    for _ in range(n):
+        r = np.random.rand()  # Slumpa ett tal mellan 0 och 1
+        if r < 0.01:
+            A = A1
+            b = b1
+        elif r < 0.86:
+            A = A2
+            b = b2
+        elif r < 0.93:
+            A = A3
+            b = b3
+        else:
+            A = A4
+            b = b4
+        
+        # Uppdatera vektorn
+        v = np.matmul(A, v) + b
+        points.append(v)
+    
+    points = np.array(points)
+    
+    # Plotta punkterna
+    plt.scatter(points[:, 0], points[:, 1], s=0.1)
+    plt.show()
+
+# Testa genereringen av fraktalen med 10 000 punkter
+barnsley_fern(10000)
 
 # def bruh(A, v, n):
 #     A,v,n = conditions(A,v,n)

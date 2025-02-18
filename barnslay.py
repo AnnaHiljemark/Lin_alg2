@@ -1,17 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def generate_vectors(A, v0, n):
+def vectors(A, v0, n):
 
     vectors = np.zeros((2, n))  # Skapar en tom 2x2-matris
-    vectors[:, 0] = v0  # Sätter första vektorn
+    vectors[:, 0] = v0  # Sätter första vektorn till v0
     
     for k in range(1, n):
         vectors[:, k] = np.matmul(A, vectors[:, k-1])  # Multiplicerar med A rekursivt
     
-    return vectors
+    return vectors #Returnerar alla vektorerna
 
-def barnsley_fern(n):
+def barnslay(n):
 
     A1 = np.array([[0, 0], [0, 0.16]])
     A2 = np.array([[0.85, 0.04], [-0.04, 0.85]])  
@@ -26,8 +26,8 @@ def barnsley_fern(n):
     v = np.array([0, 0])  # Startvektor
     points = np.zeros((2, n))  # Skapar en matris för punkterna
     
-    for i in range(n):
-        r = np.random.rand()
+    for i in range(n): 
+        r = np.random.rand() #Genererar ett randomtal, om talet är inom sannolikheterna väljs någon av följande
         if r < 0.01:
             A= A1
             b = b1
@@ -41,11 +41,11 @@ def barnsley_fern(n):
             A = A4
             b = b4
         
-        v = np.matmul(A, v) + b 
-        points[:, i] = v
+        v = np.matmul(A, v) + b #Matris A multipiliceras med senaste vektorn och b adderas
+        points[:, i] = v #Punkten sparas
     
     plt.scatter(points[0], points[1], s=0.1, color='darkgreen')
     plt.show()
 
-barnsley_fern(100000)
+barnslay(100000)
 
